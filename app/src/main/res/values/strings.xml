@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">evotor-discount</string>
+    <string name="title_activity_discount">DiscountActivity</string>
+</resources>

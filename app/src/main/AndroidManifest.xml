@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="ru.evotor.permission.receipt.printExtra.SET" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_discount"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Evotordiscount"
+        tools:targetApi="31">
+        <!-- UUID номер приложения в системе Эвотор. Вкладка APK приложения в ЛК -->
+
+        <activity android:name=".DiscountActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Dialog" />
+        <meta-data
+            android:name="app_uuid"
+            android:value="2f0a91d4-8657-45bd-8dc1-f7515aed73ee" /> <!-- Начисление скидки на чек возврата -->
+        <service
+            android:name=".MyDiscountService"
+            android:enabled="true"
+            android:exported="true"
+            android:icon="@mipmap/ic_discount"
+            android:label="Скидка в чеке">
+
+            <!-- Задаёт фон, на котором отображается иконка приложения. -->
+            <meta-data
+                android:name="ru.evotor.sales_screen.BACKGROUND_COLOR"
+                android:value="#9ED8A1" />
+
+            <intent-filter android:priority="20">
+
+                <action android:name="ACTION_SHOW_DISCOUNT_DIALOG" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <!-- Подписывает службу на событие ReceiptDiscountEvent и указывает смарт-терминалу отображать иконку приложения на экране оплаты чека продажи. -->
+                  <action android:name="evo.v2.receipt.sell.receiptDiscount" />
+                <!-- Подписывает службу на событие ReceiptDiscountEvent и указывает смарт-терминалу отображать иконку приложения на экране оплаты чека возврата. -->
+                <action android:name="evo.v2.receipt.payback.receiptDiscount" />
+            </intent-filter>
+
+        </service>
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Evotordiscount">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
